@@ -56,10 +56,8 @@ try:
 		results = database.get('unknown/en', None)
 		try:
 			for keys in results.keys():
-                                if str(results.get(keys)) == "?":
-                                        database.put('unknown/en/', keys, zipcode)
-                                        database.put('lang/en', keys, str(chatbot.get_response(keys)))
-                                        database.delete('unknown/en/', keys)
+				database.put('lang/en', keys, str(chatbot.get_response(keys)))
+				database.delete('unknown/en/', keys)
 		except:
 			print("None to correct")
 		print("Completed <SuperBot> conversation help.")
@@ -81,3 +79,4 @@ except Exception as e:
 		file.write(str(e))
 		file.close()
 		os.system('sudo reboot')
+
