@@ -10,6 +10,7 @@ zipcode = "01602"
 url = 'server/' + zipcode
 waiting = 0
 translator = Translator()
+times = 0
 database = firebase.FirebaseApplication("https://sabrina-415a1.firebaseio.com")
 try:
 	chatbot = chatterbot.ChatBot("Sabrina")
@@ -34,6 +35,7 @@ try:
 	process = Popen(['vcgencmd', 'measure_temp'], stdout=PIPE)
 	database.put(url, 'temp', str(process.communicate()).split('temp=')[1].split('C')[0].replace("""'""", "") + "C")
 	while True:
+		times = times + 1
 		print("Starting job...")
 		cmd = database.get(url, None)
 		if cmd.get('cmd') == '1':
@@ -68,6 +70,9 @@ try:
 		print("Beginning rest...")
 		sleep(10)
 		print("Rest time over.")
+		if times > 30:
+			database = firebase.FirebaseApplication('https://sabrina-415a1.firebaseio.com')
+			times = 0
 except Exception as e:
 	try:
 		database.put(url, 'status', 'error')
