@@ -13,6 +13,10 @@ translator = Translator()
 times = 0
 database = firebase.FirebaseApplication("https://sabrina-415a1.firebaseio.com")
 try:
+        latest = database.get("server/update", "patch")
+        current = open("serverPatch.txt", "r")
+        if not current == latest:
+                os.system("python3 /home/pi/run.py")
         chatbot = chatterbot.ChatBot("Sabrina")
         print("Starting server...")
         print("Reporting status...")
@@ -71,7 +75,8 @@ try:
                                         dic[int(str(match/overall*100).split(".")[0])] = result
                                 if int(max(dic.keys())) > 60:
                                     print("Possible match found!")
-                                    print(results0.get(str(dic.get(max(dic.keys())))))
+                                    database.put('lang/en', keys, results0.get(str(dic.get(max(dic.keys())))))
+                                    database.delete('unknown/en/', keys)
                                 else:
                                         database.put('lang/en', keys, str(chatbot.get_response(keys)))
                                         database.delete('unknown/en/', keys)
