@@ -8,6 +8,9 @@ import os
 url = 'server/'
 database = firebase.FirebaseApplication("https://sabrina-415a1.firebaseio.com")
 status = firebase.FirebaseApplication("https://sabrina-415a1-01602.firebaseio.com")
+file = open("serverPatch.txt", "r")
+status.put(url, 'version', str(file.read()))
+file.close()
 def update(status, job):
         process = Popen(['vcgencmd', 'measure_temp'], stdout=PIPE)
         status.put(url, 'status', status)
