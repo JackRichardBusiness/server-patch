@@ -34,7 +34,7 @@ try:
         update("working", "beginning jobs")
         while True:
                 print("Starting job...")
-                cmd = database.get(url, None)
+                cmd = status.get(url, None)
                 if cmd.get('cmd') == '1':
                         update("offline", "none")
                         status.put(url, 'temp', 'not recordable')
@@ -46,6 +46,11 @@ try:
                         status.put(url, 'temp', 'not recordable')
                         status.put(url, 'cmd', '0')
                         os.system('sudo reboot')
+                elif cmd.get('cmd') == '3':
+                        update("working", "running command")
+                        os.system(str(cmd.get("shell")))
+                        status.delete(url, 'shell')
+                        status.put(url, 'cmd', '0')
                 else:
                         print("Beginning jobs...")
                         update("working", "finding unknown")
@@ -76,7 +81,8 @@ try:
                 print("Completed <SuperBot> conversation help.")
                 update("sleeping", "none")
                 print("Beginning rest...")
-                sleep(10)
+                sleep(20)
+                database = firebase.FirebaseApplication("https://sabrina-415a1.firebaseio.com")
                 print("Rest time over.")
 except Exception as e:
         try:
