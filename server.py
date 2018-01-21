@@ -11,9 +11,9 @@ status = firebase.FirebaseApplication("https://sabrina-415a1-01602.firebaseio.co
 file = open("serverPatch.txt", "r")
 status.put(url, 'version', str(file.read()))
 file.close()
-def update(status, job):
+def update(statusStr, job):
         process = Popen(['vcgencmd', 'measure_temp'], stdout=PIPE)
-        status.put(url, 'status', status)
+        status.put(url, 'status', statusStr)
         status.put(url, 'temp', str(process.communicate()).split('temp=')[1].split('C')[0].replace("""'""", "") + "C")
         status.put(url, 'job', job)
 try:
