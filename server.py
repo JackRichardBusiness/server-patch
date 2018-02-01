@@ -20,12 +20,8 @@ try:
         chatbot = chatterbot.ChatBot("Sabrina")
         print("Starting server...")
         print("Reporting status...")
-        update("online", "training (corpus)")
         print("Reported.")
-        print("Starting <SuperBot> ...")
-        chatbot.set_trainer(chatterbot.trainers.ChatterBotCorpusTrainer)
-        chatbot.train("chatterbot.corpus.english")
-        update("online", "training (database)")
+        update("online", "training")
         chatbot.set_trainer(chatterbot.trainers.ListTrainer)
         result = database.get('lang/en', None)
         for key in result.keys():
@@ -81,7 +77,7 @@ try:
                 print("Completed <SuperBot> conversation help.")
                 update("sleeping", "none")
                 print("Beginning rest...")
-                sleep(20)
+                sleep(30)
                 database = firebase.FirebaseApplication("https://sabrina-415a1.firebaseio.com")
                 print("Rest time over.")
 except Exception as e:
