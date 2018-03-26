@@ -25,7 +25,7 @@ try:
         chatbot.set_trainer(chatterbot.trainers.ListTrainer)
         result = database.get('lang/en', None)
         for key in result.keys():
-                chatbot.train([key, result.get(key)])
+                chatbot.train([result.get(key+"/native0", None), result.get(key+"/native0")])
         print("Started all services...")
         update("working", "beginning jobs")
         while True:
